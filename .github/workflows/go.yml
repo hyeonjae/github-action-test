@@ -28,7 +28,7 @@ jobs:
           const { data } = await github.users.getByUsername({
             username: context.actor,
           })
-          console.log(`data: ${data}`)
+          console.log(`data: ${JSON.stringify(data)}`)
           console.log(`data.email: ${data.email}`)
           return data.email
 
