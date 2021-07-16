@@ -28,6 +28,7 @@ jobs:
           const { data } = await github.users.getByUsername({
             username: context.actor,
           })
+          console.log(`data.email: ${data.email}`)
           return data.email
 
     - name: Compare Email
