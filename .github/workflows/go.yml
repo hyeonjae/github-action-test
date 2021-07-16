@@ -20,7 +20,7 @@ jobs:
 
     - name: Get Actor Email
       id: get-email
-      uses: actions/github-script@v3
+      uses: actions/github-script@v4
       with:
         github-token: ${{ secrets.ORG_DEPLOY_TOKEN }}
         result-encoding: string
@@ -28,6 +28,7 @@ jobs:
           const { data } = await github.users.getByUsername({
             username: context.actor,
           })
+          console.log(`data: ${data}`)
           console.log(`data.email: ${data.email}`)
           return data.email
 
