@@ -18,6 +18,26 @@ jobs:
       with:
         go-version: 1.16
 
+    - name: Get Actor Email
+      id: get-email
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ secrets.ORG_DEPLOY_TOKEN }}
+        result-encoding: string
+        script: |
+          const { data } = await github.users.getByUsername({
+            username: context.actor,
+          })
+          return data.email
+
+    - name: Compare Email
+      env:
+        ACTOR_EMAIL: ${{ steps.get-email.outputs.result }}
+        PUSHER_EMAIL: ${{ github.event.pusher.email }}
+      run: |
+        echo "ACTOR_EMAIL: ${ACTOR_EMAIL}"
+        echo "PUSHER_EMAIL: ${PUSHER_EMAIL}"
+
     - name: Build
       run: go build -v ./...
 
